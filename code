@@ -1,6 +1,6 @@
 Clear["Global`*"]
 
-# Population Dynamics
+(* Population Dynamics *)
 
 dHdt = rh H \[Alpha]hh/Kh (Kh - H - \[Alpha]hq Q); 
 dQdt = rq Q \[Alpha]qq/Kq (Kq - Q - \[Alpha]qh H) ;
@@ -10,7 +10,7 @@ eq2 = Solve[dQdt == 0, Q];
 
 equil = Simplify[Solve[{dHdt == 0, dQdt == 0}, {H, Q}]];
 
-# Solve and plot
+(# Solve and plot #)
 Manipulate[
   Module[{plt, sol}, 
    sol = NDSolve[{H'[t] == 
