@@ -1,0 +1,41 @@
+Clear["Global`*"]
+
+# Population Dynamics
+
+dHdt = rh H \[Alpha]hh/Kh (Kh - H - \[Alpha]hq Q); 
+dQdt = rq Q \[Alpha]qq/Kq (Kq - Q - \[Alpha]qh H) ;
+
+eq1 = Solve[dHdt == 0, H];
+eq2 = Solve[dQdt == 0, Q];
+
+equil = Simplify[Solve[{dHdt == 0, dQdt == 0}, {H, Q}]];
+
+# Solve and plot
+Manipulate[
+  Module[{plt, sol}, 
+   sol = NDSolve[{H'[t] == 
+       rh H[t] \[Alpha]hh (Kh - H[t] - \[Alpha]hq Q[t])/Kh, 
+      Q'[t] == rq Q[t] \[Alpha]qq (Kq - Q[t] - \[Alpha]qh H[t])/Kq, 
+      H[0] == 0.5, Q[0] == 0.55}, {H [t], Q[t]}, {t, 0, 100}]; 
+   plt = Plot[{H[t] /. sol, Q[t] /. sol}, {t, 0, 100}, Frame -> True, 
+     FrameLabel -> {"time", 
+       "population densities of species 1 and 2"}, PlotStyle -> Thick,
+      PlotRange -> {0, 2}, ImageSize -> {500, 300}]],
+  {{\[Alpha]hq, 2, "effect of q on h"}, 0.4, 2, 0.01, 
+   Appearance -> "Labeled"},
+  {{\[Alpha]hh, 1, "effect of h on itself"}, 0, 2, 0.01, 
+   Appearance -> "Labeled"}, {{\[Alpha]qq, 1, 
+    "effect of q on itself"}, 0, 2, 0.01, 
+   Appearance -> "Labeled"}, {{\[Alpha]qh, 2, "effect of h on q"}, 
+   0.4, 2, 0.01, 
+   Appearance -> "Labeled"}, {{rh, 1, 
+    "intrinsic rate of increase of h"}, 0.2, 2, 0.01, 
+   Appearance -> "Labeled"}, {{rq, 1, "intrinsic rate of increase q"},
+    0.2, 2, 0.01, 
+   Appearance -> "Labeled"}, {{Kh, 1, "carrying capacity of h"}, 0.4, 
+   2, 0.01, 
+   Appearance -> "Labeled"}, {{Kq, 1, "carrying capacity of h"}, 0.4, 
+   2, 0.01, Appearance -> "Labeled"},
+  TrackedSymbols :> {\[Alpha]hq, \[Alpha]hh, \[Alpha]qq, \[Alpha]qh, 
+    rh, rq, Kh, Kq}, SynchronousUpdating -> False, 
+  ControlPlacement -> Top];
