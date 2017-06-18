@@ -1,0 +1,511 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     21580,        503]
+NotebookOptionsPosition[     19939,        454]
+NotebookOutlinePosition[     20295,        470]
+CellTagsIndexPosition[     20252,        467]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Priority-mediated coexistence model", "Title",
+ CellChangeTimes->{{3.671469627803831*^9, 3.671469640377431*^9}, {
+  3.706801571676957*^9, 
+  3.706801596838421*^9}},ExpressionUUID->"ec7b5d79-61e7-4ea7-8aef-\
+f9c234c37bae"],
+
+Cell[BoxData[
+ RowBox[{"(*", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+    "The", " ", "goal", " ", "of", " ", "this", " ", "model", " ", "is", " ", 
+     "to", " ", "modify", " ", "simple", " ", "LV", " ", "competition", " ", 
+     "equations", " ", "to", " ", "include", " ", "the", " ", "effect", " ", 
+     "of", " ", "prior", " ", "arrival", " ", "and", " ", "time", " ", 
+     "since", " ", "arrival", " ", "of", " ", "a", " ", "competitor", " ", 
+     "or", " ", 
+     RowBox[{"conspecific", ".", " ", "This"}], " ", "effect", " ", "was", 
+     " ", "previously", " ", "modeled", " ", "as", " ", "an", " ", 
+     "exponential", " ", "decay", " ", "of", " ", "surival", " ", 
+     "probability", " ", "with", " ", "increasing", " ", "time", " ", "since",
+      " ", "prior", " ", 
+     RowBox[{"arrival", ".", " ", "In"}], " ", "order", " ", "to", " ", 
+     "integrate", " ", "this", " ", "into", " ", "a", " ", "LV", " ", 
+     "context", " ", "across", " ", "ie", " ", "across", " ", "population", 
+     " ", "JWW", " ", "suggested", " ", "calulating", " ", "the", " ", 
+     "average", " ", "survival", " ", "when", " ", "faced", " ", "with", " ", 
+     "competitor", " ", "of", " ", "either", " ", "species", " ", "and", " ", 
+     "using", " ", "this", " ", 
+     RowBox[{"proportion", "?", " ", "or"}], " ", "its", " ", 
+     RowBox[{"complement", "?", " ", "as"}], " ", "the", " ", "LV", " ", 
+     "intra", " ", "or", " ", "interprecific", " ", "competition", " ", 
+     "term"}], "..."}], "still", " ", "thinking", " ", "about", " ", "this", 
+   " ", "one"}], " ", "*)"}]], "Input",
+ CellChangeTimes->{{3.706801631684391*^9, 3.706801710121519*^9}, {
+  3.70680176997854*^9, 3.706801951594068*^9}, {3.70680467313969*^9, 
+  3.706804796518956*^9}, {3.706804842677512*^9, 
+  3.706804905223343*^9}},ExpressionUUID->"92221ccd-bf84-4a78-96ff-\
+59efa11690dd"],
+
+Cell[CellGroupData[{
+
+Cell["Basic LV competition", "Chapter",
+ CellChangeTimes->{{3.70680492195706*^9, 
+  3.7068049276087627`*^9}},ExpressionUUID->"f4a5866d-f9cc-41d5-ba4a-\
+076c97750724"],
+
+Cell[CellGroupData[{
+
+Cell["Define Model", "Subchapter",
+ CellChangeTimes->{{3.650737723549487*^9, 3.650737728214096*^9}, {
+   3.650913568736878*^9, 3.650913588998871*^9}, {3.6591909200879674`*^9, 
+   3.6591909210243754`*^9}, {3.6591910277032576`*^9, 3.659191034743925*^9}, {
+   3.659191196970709*^9, 3.6591912022600923`*^9}, 3.6612000414449635`*^9, {
+   3.6612006546977177`*^9, 3.661200662413233*^9}, {3.6612014078723125`*^9, 
+   3.6612014157125235`*^9}, 
+   3.672503098236525*^9},ExpressionUUID->"924fdc26-f32d-4a66-bf13-\
+a762f85df956"],
+
+Cell[BoxData[
+ RowBox[{"Clear", "[", "\"\<Global`*\>\"", "]"}]], "Input",
+ CellChangeTimes->{{3.659191254994094*^9, 
+  3.659191264121791*^9}},ExpressionUUID->"719f55d2-6400-4968-81b6-\
+f7b8dcbea4f3"],
+
+Cell[CellGroupData[{
+
+Cell["Population Dynamics", "Subsection",
+ CellChangeTimes->{{3.659191291730322*^9, 3.6591912957090616`*^9}, {
+  3.6591913290252542`*^9, 
+  3.6591913337997413`*^9}},ExpressionUUID->"a31d625b-4b38-4573-a86f-\
+059500889823"],
+
+Cell[BoxData[{
+ RowBox[{
+  StyleBox[
+   RowBox[{
+    RowBox[{"dHdt", " ", "=", " ", 
+     RowBox[{"rh", " ", "H", " ", 
+      RowBox[{"\[Alpha]hh", "/", "Kh"}], " ", 
+      RowBox[{"(", 
+       RowBox[{"Kh", " ", "-", " ", "H", " ", "-", " ", 
+        RowBox[{"\[Alpha]hq", " ", "Q"}]}], ")"}]}]}], ";"}], "Input"], 
+  StyleBox[" ", "Input"]}], "\n", 
+ RowBox[{
+  StyleBox[
+   RowBox[{
+    RowBox[{"dQdt", " ", "=", " ", 
+     RowBox[{"rq", " ", "Q", " ", 
+      RowBox[{"\[Alpha]qq", "/", "Kq"}], " ", 
+      RowBox[{"(", 
+       RowBox[{"Kq", " ", "-", " ", "Q", " ", "-", " ", 
+        RowBox[{"\[Alpha]qh", " ", "H"}]}], ")"}]}]}], " ", ";"}], "Input"], 
+  StyleBox["\[IndentingNewLine]", "Input"]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"eq1", "=", 
+   RowBox[{"Solve", "[", 
+    RowBox[{
+     RowBox[{"dHdt", "\[Equal]", "0"}], ",", "H"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"eq2", "=", 
+   RowBox[{"Solve", "[", 
+    RowBox[{
+     RowBox[{"dQdt", "\[Equal]", "0"}], ",", "Q"}], "]"}]}], ";"}]}], "Input",\
+
+ CellChangeTimes->{{3.659191403547105*^9, 3.659191579255766*^9}, {
+   3.6591916228717237`*^9, 3.6591918277315483`*^9}, {3.6591918859969482`*^9, 
+   3.659191891597348*^9}, {3.659191929439348*^9, 3.659192017940548*^9}, {
+   3.6591923288472223`*^9, 3.6591923306258955`*^9}, {3.659210698185341*^9, 
+   3.6592107234422264`*^9}, {3.6592108824872847`*^9, 3.6592108899910293`*^9}, 
+   3.6592118193970113`*^9, 3.659211936645267*^9, {3.661018091622675*^9, 
+   3.66101811890631*^9}, {3.6611970659451485`*^9, 3.6611971028060384`*^9}, {
+   3.674485223044675*^9, 3.674485236121894*^9}, {3.6744876720147533`*^9, 
+   3.674487706350187*^9}, {3.6772560527754307`*^9, 3.677256073323162*^9}, {
+   3.6775205772132053`*^9, 3.6775205906491504`*^9}, {3.6775213069126167`*^9, 
+   3.6775213150278244`*^9}, {3.706805261576109*^9, 3.7068053669212837`*^9}, {
+   3.7068054226748323`*^9, 3.706805564261746*^9}, {3.7068056783625*^9, 
+   3.7068056890431213`*^9}, {3.7068057829715223`*^9, 3.706805922418261*^9}, {
+   3.706806474645578*^9, 3.7068065472716618`*^9}, {3.706806785738414*^9, 
+   3.7068067871061687`*^9}, {3.70680794238855*^9, 3.706807964712562*^9}, {
+   3.706811767160968*^9, 
+   3.706811769844863*^9}},ExpressionUUID->"231dcb59-75c5-4e00-80b6-\
+d28769b97390"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"equil", "=", 
+   RowBox[{"Simplify", "[", 
+    RowBox[{"Solve", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"dHdt", "\[Equal]", "0"}], ",", 
+        RowBox[{"dQdt", "\[Equal]", "0"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"H", ",", "Q"}], "}"}]}], "]"}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.5926599809361353`*^9, 3.5926600250660267`*^9}, {
+   3.7068081168276567`*^9, 3.706808128854354*^9}, 
+   3.706811771719666*^9},ExpressionUUID->"70d8687a-1590-489d-8c8d-\
+685b9b76096b"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Solve and plot", "Subsection",
+ CellChangeTimes->{{3.706806792389722*^9, 
+  3.706806803214273*^9}},ExpressionUUID->"1aa57988-d6c7-4efa-b23c-\
+72f10bdd4362"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Manipulate", "[", 
+   RowBox[{
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"plt", ",", "sol"}], "}"}], ",", 
+      RowBox[{
+       RowBox[{"sol", "=", 
+        RowBox[{"NDSolve", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{"H", "'"}], "[", "t", "]"}], "\[Equal]", " ", 
+             RowBox[{"rh", " ", 
+              RowBox[{"H", "[", "t", "]"}], " ", "\[Alpha]hh", 
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{"Kh", "-", 
+                 RowBox[{"H", "[", "t", "]"}], "-", 
+                 RowBox[{"\[Alpha]hq", " ", 
+                  RowBox[{"Q", "[", "t", "]"}]}]}], ")"}], "/", "Kh"}]}]}], 
+            ",", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"Q", "'"}], "[", "t", "]"}], "\[Equal]", " ", 
+             RowBox[{"rq", " ", 
+              RowBox[{"Q", "[", "t", "]"}], "\[Alpha]qq", 
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{"Kq", "-", 
+                 RowBox[{"Q", "[", "t", "]"}], "-", 
+                 RowBox[{"\[Alpha]qh", " ", 
+                  RowBox[{"H", "[", "t", "]"}]}]}], ")"}], "/", "Kq"}]}]}], 
+            ",", 
+            RowBox[{
+             RowBox[{"H", "[", "0", "]"}], "\[Equal]", " ", "0.5"}], ",", 
+            RowBox[{
+             RowBox[{"Q", "[", "0", "]"}], "\[Equal]", " ", "0.55"}]}], "}"}],
+           ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"H", " ", "[", "t", "]"}], ",", 
+            RowBox[{"Q", "[", "t", "]"}]}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"t", ",", "0", ",", "100"}], "}"}]}], "]"}]}], ";", 
+       RowBox[{"plt", "=", 
+        RowBox[{"Plot", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"H", "[", "t", "]"}], "/.", "sol"}], ",", 
+            RowBox[{
+             RowBox[{"Q", "[", "t", "]"}], "/.", "sol"}]}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"t", ",", "0", ",", "100"}], "}"}], ",", 
+          RowBox[{"Frame", "\[Rule]", " ", "True"}], ",", 
+          RowBox[{"FrameLabel", "\[Rule]", " ", 
+           RowBox[{"{", 
+            RowBox[{
+            "\"\<time\>\"", ",", 
+             "\"\<population densities of species 1 and 2\>\""}], "}"}]}], 
+          ",", 
+          RowBox[{"PlotStyle", "\[Rule]", " ", "Thick"}], ",", 
+          RowBox[{"PlotRange", "\[Rule]", " ", 
+           RowBox[{"{", 
+            RowBox[{"0", ",", "2"}], "}"}]}], ",", 
+          RowBox[{"ImageSize", "\[Rule]", " ", 
+           RowBox[{"{", 
+            RowBox[{"500", ",", "300"}], "}"}]}]}], "]"}]}]}]}], "]"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"\[Alpha]hq", ",", "2", ",", "\"\<effect of q on h\>\""}], 
+       "}"}], ",", "0.4", ",", "2", ",", "0.01", ",", 
+      RowBox[{"Appearance", "\[Rule]", "\"\<Labeled\>\""}]}], "}"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"\[Alpha]hh", ",", "1", ",", "\"\<effect of h on itself\>\""}],
+        "}"}], ",", "0", ",", "2", ",", "0.01", ",", 
+      RowBox[{"Appearance", "\[Rule]", "\"\<Labeled\>\""}]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"\[Alpha]qq", ",", "1", ",", "\"\<effect of q on itself\>\""}],
+        "}"}], ",", "0", ",", "2", ",", "0.01", ",", 
+      RowBox[{"Appearance", "\[Rule]", "\"\<Labeled\>\""}]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"\[Alpha]qh", ",", "2", ",", "\"\<effect of h on q\>\""}], 
+       "}"}], ",", "0.4", ",", "2", ",", "0.01", ",", 
+      RowBox[{"Appearance", "\[Rule]", "\"\<Labeled\>\""}]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "rh", ",", "1", ",", "\"\<intrinsic rate of increase of h\>\""}], 
+       "}"}], ",", "0.2", ",", "2", ",", "0.01", ",", 
+      RowBox[{"Appearance", "\[Rule]", "\"\<Labeled\>\""}]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"rq", ",", "1", ",", "\"\<intrinsic rate of increase q\>\""}], 
+       "}"}], ",", "0.2", ",", "2", ",", "0.01", ",", 
+      RowBox[{"Appearance", "\[Rule]", "\"\<Labeled\>\""}]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"Kh", ",", "1", ",", "\"\<carrying capacity of h\>\""}], "}"}],
+       ",", "0.4", ",", "2", ",", "0.01", ",", 
+      RowBox[{"Appearance", "\[Rule]", "\"\<Labeled\>\""}]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"Kq", ",", "1", ",", "\"\<carrying capacity of h\>\""}], "}"}],
+       ",", "0.4", ",", "2", ",", "0.01", ",", 
+      RowBox[{"Appearance", "\[Rule]", "\"\<Labeled\>\""}]}], "}"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"TrackedSymbols", "\[RuleDelayed]", 
+     RowBox[{"{", 
+      RowBox[{
+      "\[Alpha]hq", ",", "\[Alpha]hh", ",", " ", "\[Alpha]qq", ",", 
+       "\[Alpha]qh", ",", " ", "rh", ",", "rq", ",", "Kh", ",", "Kq"}], 
+      "}"}]}], ",", 
+    RowBox[{"SynchronousUpdating", "\[Rule]", "False"}], ",", 
+    RowBox[{"ControlPlacement", "\[Rule]", " ", "Top"}]}], "]"}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.706806827492527*^9, 3.7068071902533712`*^9}, {
+   3.7068072963575697`*^9, 3.706807299206222*^9}, {3.70680850171043*^9, 
+   3.706808526441608*^9}, {3.706808578187216*^9, 3.706808759535013*^9}, {
+   3.7068087967295237`*^9, 3.7068088109908857`*^9}, {3.706809298170892*^9, 
+   3.7068093488116093`*^9}, {3.7068093788431053`*^9, 
+   3.7068094009753847`*^9}, {3.7068099890183363`*^9, 
+   3.7068100497833242`*^9}, {3.706810079937243*^9, 3.70681008845197*^9}, {
+   3.706810137546763*^9, 3.706810144735153*^9}, {3.7068105368746767`*^9, 
+   3.7068105607690363`*^9}, {3.706810676565672*^9, 3.706810677650073*^9}, {
+   3.706810742313575*^9, 3.7068107619538517`*^9}, {3.706810957296997*^9, 
+   3.706810957984026*^9}, {3.706811102291026*^9, 3.706811133742087*^9}, {
+   3.706811164241393*^9, 3.706811184624672*^9}, 
+   3.7068117758274517`*^9},ExpressionUUID->"df8a6dd1-141c-473f-9279-\
+d5bcd8fd26f5"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`Kh$$ = 1, $CellContext`Kq$$ = 
+    1, $CellContext`rh$$ = 1, $CellContext`rq$$ = 
+    1, $CellContext`\[Alpha]hh$$ = 1, $CellContext`\[Alpha]hq$$ = 
+    2, $CellContext`\[Alpha]qh$$ = 2, $CellContext`\[Alpha]qq$$ = 1, 
+    Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`\[Alpha]hq$$], 2, "effect of q on h"}, 0.4, 2, 
+      0.01}, {{
+       Hold[$CellContext`\[Alpha]hh$$], 1, "effect of h on itself"}, 0, 2, 
+      0.01}, {{
+       Hold[$CellContext`\[Alpha]qq$$], 1, "effect of q on itself"}, 0, 2, 
+      0.01}, {{
+       Hold[$CellContext`\[Alpha]qh$$], 2, "effect of h on q"}, 0.4, 2, 
+      0.01}, {{
+       Hold[$CellContext`rh$$], 1, "intrinsic rate of increase of h"}, 0.2, 2,
+       0.01}, {{
+       Hold[$CellContext`rq$$], 1, "intrinsic rate of increase q"}, 0.2, 2, 
+      0.01}, {{
+       Hold[$CellContext`Kh$$], 1, "carrying capacity of h"}, 0.4, 2, 0.01}, {{
+       Hold[$CellContext`Kq$$], 1, "carrying capacity of h"}, 0.4, 2, 0.01}}, 
+    Typeset`size$$ = {500., {148., 152.}}, Typeset`update$$ = 0, 
+    Typeset`initDone$$, Typeset`skipInitDone$$ = 
+    True, $CellContext`\[Alpha]hq$55643$$ = 
+    0, $CellContext`\[Alpha]hh$55644$$ = 0, $CellContext`\[Alpha]qq$55645$$ = 
+    0, $CellContext`\[Alpha]qh$55646$$ = 0, $CellContext`rh$55647$$ = 
+    0, $CellContext`rq$55648$$ = 0, $CellContext`Kh$55649$$ = 
+    0, $CellContext`Kq$55650$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`Kh$$ = 1, $CellContext`Kq$$ = 
+        1, $CellContext`rh$$ = 1, $CellContext`rq$$ = 
+        1, $CellContext`\[Alpha]hh$$ = 1, $CellContext`\[Alpha]hq$$ = 
+        2, $CellContext`\[Alpha]qh$$ = 2, $CellContext`\[Alpha]qq$$ = 1}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`\[Alpha]hq$$, $CellContext`\[Alpha]hq$55643$$, 0], 
+        Hold[$CellContext`\[Alpha]hh$$, $CellContext`\[Alpha]hh$55644$$, 0], 
+        Hold[$CellContext`\[Alpha]qq$$, $CellContext`\[Alpha]qq$55645$$, 0], 
+        Hold[$CellContext`\[Alpha]qh$$, $CellContext`\[Alpha]qh$55646$$, 0], 
+        Hold[$CellContext`rh$$, $CellContext`rh$55647$$, 0], 
+        Hold[$CellContext`rq$$, $CellContext`rq$55648$$, 0], 
+        Hold[$CellContext`Kh$$, $CellContext`Kh$55649$$, 0], 
+        Hold[$CellContext`Kq$$, $CellContext`Kq$55650$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      Module[{$CellContext`plt$, $CellContext`sol$}, $CellContext`sol$ = 
+         NDSolve[{
+           Derivative[
+             1][$CellContext`H][$CellContext`t] == $CellContext`rh$$ \
+$CellContext`H[$CellContext`t] $CellContext`\[Alpha]hh$$ (($CellContext`Kh$$ - \
+$CellContext`H[$CellContext`t] - $CellContext`\[Alpha]hq$$ \
+$CellContext`Q[$CellContext`t])/$CellContext`Kh$$), 
+            Derivative[
+             1][$CellContext`Q][$CellContext`t] == $CellContext`rq$$ \
+$CellContext`Q[$CellContext`t] $CellContext`\[Alpha]qq$$ (($CellContext`Kq$$ - \
+$CellContext`Q[$CellContext`t] - $CellContext`\[Alpha]qh$$ \
+$CellContext`H[$CellContext`t])/$CellContext`Kq$$), $CellContext`H[0] == 
+            0.5, $CellContext`Q[0] == 0.55}, {
+            $CellContext`H[$CellContext`t], 
+            $CellContext`Q[$CellContext`t]}, {$CellContext`t, 0, 
+            100}]; $CellContext`plt$ = Plot[{
+            ReplaceAll[
+             $CellContext`H[$CellContext`t], $CellContext`sol$], 
+            ReplaceAll[
+             $CellContext`Q[$CellContext`t], $CellContext`sol$]}, \
+{$CellContext`t, 0, 100}, Frame -> True, 
+           FrameLabel -> {"time", "population densities of species 1 and 2"}, 
+           PlotStyle -> Thick, PlotRange -> {0, 2}, ImageSize -> {500, 300}]],
+       "Specifications" :> {{{$CellContext`\[Alpha]hq$$, 2, 
+          "effect of q on h"}, 0.4, 2, 0.01, Appearance -> 
+         "Labeled"}, {{$CellContext`\[Alpha]hh$$, 1, "effect of h on itself"},
+          0, 2, 0.01, Appearance -> 
+         "Labeled"}, {{$CellContext`\[Alpha]qq$$, 1, "effect of q on itself"},
+          0, 2, 0.01, Appearance -> 
+         "Labeled"}, {{$CellContext`\[Alpha]qh$$, 2, "effect of h on q"}, 0.4,
+          2, 0.01, Appearance -> 
+         "Labeled"}, {{$CellContext`rh$$, 1, 
+          "intrinsic rate of increase of h"}, 0.2, 2, 0.01, Appearance -> 
+         "Labeled"}, {{$CellContext`rq$$, 1, "intrinsic rate of increase q"}, 
+         0.2, 2, 0.01, Appearance -> 
+         "Labeled"}, {{$CellContext`Kh$$, 1, "carrying capacity of h"}, 0.4, 
+         2, 0.01, Appearance -> 
+         "Labeled"}, {{$CellContext`Kq$$, 1, "carrying capacity of h"}, 0.4, 
+         2, 0.01, Appearance -> "Labeled"}}, 
+      "Options" :> {
+       TrackedSymbols :> {$CellContext`\[Alpha]hq$$, \
+$CellContext`\[Alpha]hh$$, $CellContext`\[Alpha]qq$$, \
+$CellContext`\[Alpha]qh$$, $CellContext`rh$$, $CellContext`rq$$, \
+$CellContext`Kh$$, $CellContext`Kq$$}, SynchronousUpdating -> False, 
+        ControlPlacement -> Top}, "DefaultOptions" :> {}],
+     ImageSizeCache->{545., {291., 297.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{
+  3.706807194679324*^9, 3.706807311254262*^9, {3.7068085089090977`*^9, 
+   3.706808527568008*^9}, 3.706808772719989*^9, 3.706808814594244*^9, {
+   3.70680933234837*^9, 3.706809349808576*^9}, {3.706809387165777*^9, 
+   3.706809402486229*^9}, {3.706809998598548*^9, 3.706810050872319*^9}, 
+   3.706810089301382*^9, {3.7068101262879543`*^9, 3.706810146490609*^9}, {
+   3.7068105466206284`*^9, 3.706810562111096*^9}, 3.706810678579122*^9, {
+   3.706810746042778*^9, 3.706810762652025*^9}, 3.706810959884108*^9, {
+   3.706811115144126*^9, 3.7068111353429413`*^9}, {3.7068111666608543`*^9, 
+   3.706811185291844*^9}},ExpressionUUID->"02dfcf91-a396-42ac-a25f-\
+32a1114effad"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell["Extension with effect of prior occupancy", "Chapter",
+ CellChangeTimes->{{3.70680492195706*^9, 3.7068049276087627`*^9}, {
+  3.706811287504902*^9, 
+  3.7068113310373096`*^9}},ExpressionUUID->"e1d35ce0-0fe7-4188-96b3-\
+06a98bbf4715"]
+}, Open  ]]
+},
+WindowSize->{1140, 751},
+WindowMargins->{{Automatic, 59}, {-3, Automatic}},
+FrontEndVersion->"11.1 for Mac OS X x86 (32-bit, 64-bit Kernel) (April 27, \
+2017)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 227, 4, 92, "Title", "ExpressionUUID" -> \
+"5fadc996-7b5b-4d0c-9b41-1c82b49ae2e8"],
+Cell[810, 28, 1861, 32, 138, "Input", "ExpressionUUID" -> \
+"92221ccd-bf84-4a78-96ff-59efa11690dd"],
+Cell[CellGroupData[{
+Cell[2696, 64, 166, 3, 65, "Chapter", "ExpressionUUID" -> \
+"f4a5866d-f9cc-41d5-ba4a-076c97750724"],
+Cell[CellGroupData[{
+Cell[2887, 71, 517, 8, 63, "Subchapter", "ExpressionUUID" -> \
+"924fdc26-f32d-4a66-bf13-a762f85df956"],
+Cell[3407, 81, 199, 4, 32, "Input", "ExpressionUUID" -> \
+"719f55d2-6400-4968-81b6-f7b8dcbea4f3"],
+Cell[CellGroupData[{
+Cell[3631, 89, 222, 4, 44, "Subsection", "ExpressionUUID" -> \
+"a31d625b-4b38-4573-a86f-059500889823"],
+Cell[3856, 95, 2287, 50, 117, "Input", "ExpressionUUID" -> \
+"231dcb59-75c5-4e00-80b6-d28769b97390"],
+Cell[6146, 147, 560, 15, 32, "Input", "ExpressionUUID" -> \
+"70d8687a-1590-489d-8c8d-685b9b76096b"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6743, 167, 162, 3, 44, "Subsection", "ExpressionUUID" -> \
+"1aa57988-d6c7-4efa-b23c-72f10bdd4362"],
+Cell[CellGroupData[{
+Cell[6930, 174, 6217, 148, 348, "Input", "ExpressionUUID" -> \
+"df8a6dd1-141c-473f-9279-d5bcd8fd26f5"],
+Cell[13150, 324, 6485, 117, 605, "Output", "ExpressionUUID" -> \
+"02dfcf91-a396-42ac-a25f-32a1114effad"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[19686, 447, 237, 4, 65, "Chapter", "ExpressionUUID" -> \
+"e1d35ce0-0fe7-4188-96b3-06a98bbf4715"]
+}, Open  ]]
+}
+]
+*)
+
